@@ -21,7 +21,7 @@ driver = webdriver.Firefox(service=service, options=firefox_options)
 
 try:
     # ------- URL de la página a scrapear -------
-    url = 'https://www.exito.com/tecnologia/computadores/portatiles'
+    url = 'https://www.exito.com/tecnologia/computadores/portatiles?category-2=computadores&category-3=portatiles&category-3=computadores-gaming&category-1=tecnologia&facets=category-2%2Ccategory-3%2Ccategory-1&sort=score_desc&page=0'
 
     print(f"Navegando a la página: {url}")
     # Navega a la página
@@ -63,6 +63,10 @@ try:
         # Extraer la marca
         marca_tag = producto.find('span', class_='styles_brand__IdJcB')
         marca = marca_tag.get_text(strip=True) if marca_tag else 'N/A'
+        
+        # Extraer el precio en tarjeta de exito
+        precio_tarjeta_exito_tag = producto.find('span', class_='price_fs-price__4GZ9F')
+        precio_tarjeta_exito = precio_tarjeta_exito_tag.get_text(strip=True) if precio_tarjeta_exito_tag else 'N/A'
 
         # Extraer el precio actual
         precio_actual_tag = producto.find('p', class_='ProductPrice_container__price__XmMWA')
@@ -77,10 +81,11 @@ try:
             'Marca': marca,
             'Nombre': nombre,
             'Precio Actual': precio_actual,
-            'Precio Original': precio_original
+            'Precio Original': precio_original,
+            'Precio Tarjeta de Exito': precio_tarjeta_exito,
         })
 
-        print(f"Producto {idx}: {nombre} - {marca} - Precio Actual: {precio_actual} / Precio Original: {precio_original}")
+        print(f"Producto {idx}: {nombre} - {marca} - Precio Actual: {precio_actual} / Precio Original: {precio_original} / Precio Tarjeta de Exito: {precio_tarjeta_exito}")
 
     # Crear un DataFrame de Pandas
     df = pd.DataFrame(datos)
