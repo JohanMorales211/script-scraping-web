@@ -49,7 +49,7 @@ pip install -r requirements.txt
 ## 🚀 Uso
 
 ```bash
-python scraping_portatiles_exito.py
+python nombre_archivo.py
 ```
 
 ## 🔍 ¿Qué Hace el Script?
